@@ -1,0 +1,11 @@
+spring:
+  profiles: pro
+  datasource:
+    username:
+    password:
+    url:
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    cache: true
+server:
+  port: 80

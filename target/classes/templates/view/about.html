@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>关于我</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body>
+    <!--头部代码-->
+    <div th:replace="~{comment/comment :: nav(5)}"></div>
+
+    <!--中间代码-->
+    <div  class="container-top">
+        <div class="ui container">
+            <div class="ui grid  stackable ">
+                <div class="ui eleven wide column">
+                    <img src="https://images.pexels.com/photos/1029606/pexels-photo-1029606.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"  alt="" class="ui rounded image" style="height: 600px !important;width: 800px !important;">
+                </div>
+                <div class="ui five wide column">
+                    <div class="ui top attached segment">
+                        <div class="ui header">关于我</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <p style="font-size: 15px !important;">
+                            这是一个爱编程,爱写作,爱运动的90后男孩的世界，希望你在这里可以找到你想要的。如果出现问题,请直接联系管理员.
+                        </p>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui orange basic label large left pointing">编程</div>
+                        <div class="ui orange basic label large left pointing">写作</div>
+                        <div class="ui orange basic label large left pointing">读书</div>
+                        <div class="ui orange basic label large left pointing">运动</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui teal basic label left pointing about-tbrf">Html</div>
+                        <div class="ui teal basic label left pointing about-tbrf" >CSS</div>
+                        <div class="ui teal basic label left pointing about-tbrf">Java</div>
+                        <div class="ui teal basic label left pointing about-tbrf">JavaScript</div>
+                        <div class="ui teal basic label left pointing about-tbrf">MYSQL</div>
+                        <div class="ui teal basic label left pointing about-tbrf">linux</div>
+                        <div class="ui teal basic label left pointing about-tbrf">Vue</div>
+                        <div class="ui teal basic label left pointing about-tbrf">SSM</div>
+                    </div>
+                    <div class="ui bottom attached segment">
+                        <a href="#" target="_blank" class="ui qq circular icon button" data-content="164072136"><i class="qq icon"></i></a>
+                        <a href="#" target="_blank" class="ui  weixin circular icon button" data-content="axuxianghui"><i class="weixin icon"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部代码-->
+    <div th:replace="~{comment/comment :: foot}"></div>
+    <th:block th:replace="~{comment/comment :: js}"></th:block>
+    <script>
+        $('.mobile-click').click(function () {
+            $('.mobile-play').toggleClass('mobile-hidder')
+        });
+        $('.qq').popup({
+            position : 'bottom center'
+        });
+        $('.weixin').popup({
+            position : 'bottom center'
+        });
+    </script>
+</body>
+</html>

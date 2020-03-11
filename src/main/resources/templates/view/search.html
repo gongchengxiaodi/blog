@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>搜索页</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body>
+<!--头部代码-->
+<div th:replace="~{comment/comment :: nav(0)}"></div>
+
+<!--中间代码-->
+<div  class="container-top">
+    <div class="ui container container-blog-rf">
+        <!--header-->
+        <div class="ui top attached segment">
+            <div class="ui middle aligned two column grid">
+                <div class="column">
+                    <h3 class="ui teal header ">搜索结果</h3>
+                </div>
+                <div class="right aligned column ">
+                    共<h3 class="ui red header dispalyChanged" th:text="${blogPageInfo.getTotal()}"></h3>个
+                </div>
+            </div>
+        </div>
+        <!--文本-->
+        <div class="ui segment teal" >
+            <div class="ui top attached segment"  th:each="blog:${blogPageInfo.getList()}" >
+                <div class="ui middle aligned grid stackable mobile reversed ">
+                    <div class="eleven wide column">
+                        <h3 class="ui header"><a th:text="${blog.getTitle()}" th:href="@{/toblogById(id=${blog.getId()})}" class="a-color"></a></h3>
+                        <p th:text="${blog.getDescribes()}">这几天在知乎看到一个问题“为什么很多IT公司不喜欢进过培训机构的人呢？”身为教学负责人，这样的问题必然会引起我的关注，
+                            花时间看了各路人士的回答，我了个去，尽是对培训机构排山倒海的谩骂声，负面评价不胜枚举，看完久久不能释怀，
+                            心里堵的慌，又委屈又气愤又无奈</p>
+                        <div class="ui stackable  grid">
+                            <div class="eleven wide column">
+                                <div class="ui horizontal link list">
+                                    <div class="item">
+                                        <img  th:src="@{/img/head.jpg}" alt="" class="ui avatar image" style="width: 50px;height: 50px">
+                                        <div class="content left-right"><div class="header" th:text="${blog.getUser().getNickname()}">HUIHUI</div></div>
+                                    </div>
+                                    <div class="item">
+                                        <i class="calendar icon"></i> <span th:text="${#dates.format(blog.getUpdateDate(),'yyyy-MM-dd')}"></span>
+                                    </div>
+                                    <div class="item">
+                                        <i class="eye icon"></i> <span th:text="${blog.getCount()}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right aligned five wide column  lable-tb ">
+                                <a th:href="@{/toTagesById(id=${blog.getTypo().getId()})}" class="ui  teal basic label " th:text="${blog.getTypo().getName()}">代码反思</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="five wide column">
+                        <a href="#" target="_blank">
+                            <img th:src="${blog.getImgurl()}" alt="" class="ui rounded image" style="width: 800px;height: 200px">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--底部-->
+        <div class="ui padded bottom attached segment">
+            <div class="ui middle aligned two column grid">
+                <div class="column">
+                    <a th:href="@{/toSearch(startIndex=${blogPageInfo.getPageNum()-1},search=${search})}" th:if="${blogPageInfo.hasPreviousPage}" class="ui teal basic button" >上一页</a>
+                </div>
+                <div class="right aligned column ">
+                    <a th:href="@{/toSearch(startIndex=${blogPageInfo.getPageNum()+1},search=${search})}" th:if="${blogPageInfo.hasNextPage}" class="ui teal basic button">下一页</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--底部代码-->
+<div th:replace="~{comment/comment :: foot}"></div>
+<th:block th:replace="~{comment/comment :: js}"></th:block>
+<script>
+    $('.mobile-click').click(function () {
+        $('.mobile-play').toggleClass('mobile-hidder')
+    });
+</script>
+</body>
+</html>

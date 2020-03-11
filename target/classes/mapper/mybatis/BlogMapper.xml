@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huihui.mapper.BlogMapper">
+
+    <delete id="deleteBlog" parameterType="_int">
+        delete from t_blog where id = #{id}
+    </delete>
+
+    <insert id="insertBlog" parameterType="blog">
+        insert into t_blog (title,content,imgurl,flag,count,createDate,
+        updateDate,share,pay,comment,copyright,userid,typoid,describes)
+        values (#{title},#{content},#{imgurl},#{flag},#{count},#{createDate},
+        #{updateDate},#{share},#{pay},#{comment},#{copyright},
+        #{user.id},#{typo.id},#{describes})
+    </insert>
+
+    <!---->
+    <resultMap id="queryBlogMap" type="blog">
+        <!--基础数据-->
+        <result property="id" column="tbid"/>
+        <result property="title" column="tbtitle"/>
+        <result property="content" column="tbcontent"/>
+        <result property="imgurl" column="tbimgurl"/>
+        <result property="flag" column="tbflag"/>
+        <result property="count" column="tbcount"/>
+        <result property="createDate" column="tbcreateDate"/>
+        <result property="updateDate" column="tbupdateDate"/>
+        <result property="share" column="tbshare"/>
+        <result property="pay" column="tbpay"/>
+        <result property="comment" column="tbcomment"/>
+        <result property="copyright" column="tbcopyright"/>
+        <result property="describes" column="tbdescribes"/>
+        <!--user-->
+        <association property="user" javaType="user">
+            <result property="id" column="tuid"/>
+            <result property="username" column="tuusername"/>
+            <result property="password" column="tupassword"/>
+            <result property="nickname" column="tunickname"/>
+            <result property="email" column="tuemail"/>
+            <result property="imgurl" column="tuimgurl"/>
+            <result property="createDate" column="tucreateDate"/>
+            <result property="updatDate" column="tuupdatDate"/>
+        </association>
+        <!--typo-->
+        <association property="typo" javaType="typo">
+            <result property="id" column="tyid"/>
+            <result property="name" column="tyname"/>
+        </association>
+        <!--tages-->
+        <collection property="tagesList" ofType="tages">
+            <result property="id" column="taid"/>
+            <result property="name" column="taname"/>
+        </collection>
+    </resultMap>
+    <select id="queryBlogById" resultMap="queryBlogMap">
+        select
+        tb.id tbid ,tb.title tbtitle ,tb.content tbcontent,tb.imgurl tbimgurl,tb.describes tbdescribes,
+        tb.flag tbflag,tb.count tbcount,tb.createDate tbcreateDate,tb.updateDate tbupdateDate,
+        tb.share tbshare,tb.pay tbpay,tb.comment tbcomment,tb.copyright tbcopyright,
+        tu.id tuid,tu.username tuusername,tu.password tupassword,tu.nickname tunickname,
+        tu.email tuemail,tu.imgurl tuimgurl,tu.createDate tucreateDate,tu.updateDate tuupdateDate,
+        ty.id tyid,ty.name tyname ,
+        ta.id taid,ta.name taname
+        from  t_blog tb,t_blog_tages tba,t_tages ta,t_user tu ,t_typo ty
+        where tb.id = #{id} and tba.blogid = tb.id and tba.tagesid = ta.id and
+         tu.id = tb.userid and ty.id= tb.typoid ORDER BY tb.updateDate DESC ;
+    </select>
+
+    <!--view 视图展示-->
+    <select id="queryBlogsView" resultMap="queryBlogsViewMap">
+        SELECT
+        tb.id tbid ,tb.title tbtitle ,tb.content tbcontent,tb.imgurl tbimgurl,tb.describes tbdescribes,
+        tb.flag tbflag,tb.count tbcount,tb.createDate tbcreateDate,tb.updateDate tbupdateDate,
+        tb.share tbshare,tb.pay tbpay,tb.comment tbcomment,tb.copyright tbcopyrigt,
+        tu.id tuid,tu.username tuusername,tu.password tupassword,tu.nickname tunickname,
+        tu.email tuemail,tu.imgurl tuimgurl,tu.createDate tucreateDate,tu.updateDate tuupdateDate,
+        ty.id tyid,ty.name tyname
+        FROM  t_blog tb,t_user tu ,t_typo ty
+        WHERE tu.id = tb.userid AND ty.id= tb.typoid ORDER BY tb.updateDate DESC
+    </select>
+    <resultMap id="queryBlogsViewMap" type="blog">
+        <!--基础数据-->
+        <result property="id" column="tbid"/>
+        <result property="title" column="tbtitle"/>
+        <result property="content" column="tbcontent"/>
+        <result property="imgurl" column="tbimgurl"/>
+        <result property="flag" column="tbflag"/>
+        <result property="count" column="tbcount"/>
+        <result property="createDate" column="tbcreateDate"/>
+        <result property="updateDate" column="tbupdateDate"/>
+        <result property="share" column="tbshare"/>
+        <result property="pay" column="tbpay"/>
+        <result property="comment" column="tbcomment"/>
+        <result property="copyright" column="tbcopyright"/>
+        <result property="describes" column="tbdescribes"/>
+        <!--user-->
+        <association property="user" javaType="user">
+            <result property="id" column="tuid"/>
+            <result property="username" column="tuusername"/>
+            <result property="password" column="tupassword"/>
+            <result property="nickname" column="tunickname"/>
+            <result property="email" column="tuemail"/>
+            <result property="imgurl" column="tuimgurl"/>
+            <result property="createDate" column="tucreateDate"/>
+            <result property="updatDate" column="tuupdatDate"/>
+        </association>
+        <!--typo-->
+        <association property="typo" javaType="typo">
+            <result property="id" column="tyid"/>
+            <result property="name" column="tyname"/>
+        </association>
+    </resultMap>
+    <!--前端的搜索-->
+    <select id="queryBlogBySerarch" resultMap="queryBlogsViewMap">
+        SELECT
+        tb.id tbid ,tb.title tbtitle ,tb.content tbcontent,tb.imgurl tbimgurl,tb.describes tbdescribes,
+        tb.flag tbflag,tb.count tbcount,tb.createDate tbcreateDate,tb.updateDate tbupdateDate,
+        tb.share tbshare,tb.pay tbpay,tb.comment tbcomment,tb.copyright tbcopyrigt,
+        tu.id tuid,tu.username tuusername,tu.password tupassword,tu.nickname tunickname,
+        tu.email tuemail,tu.imgurl tuimgurl,tu.createDate tucreateDate,tu.updateDate tuupdateDate,
+        ty.id tyid,ty.name tyname
+        FROM  t_blog tb,t_user tu ,t_typo ty
+        <where>
+            tu.id = tb.userid AND ty.id= tb.typoid
+            <if test="search !=null">
+                and (tb.title lIKE CONCAT(CONCAT('%',#{search}),'%')
+                or tb.describes lIKE CONCAT(CONCAT('%',#{search}),'%'))
+            </if>
+        </where>
+        ORDER BY tb.updateDate DESC
+    </select>
+    <select id="queryBlogByTypoid" resultMap="queryBlogsViewMap">
+        SELECT
+        tb.id tbid ,tb.title tbtitle ,tb.content tbcontent,tb.imgurl tbimgurl,tb.describes tbdescribes,
+        tb.flag tbflag,tb.count tbcount,tb.createDate tbcreateDate,tb.updateDate tbupdateDate,
+        tb.share tbshare,tb.pay tbpay,tb.comment tbcomment,tb.copyright tbcopyrigt,
+        tu.id tuid,tu.username tuusername,tu.password tupassword,tu.nickname tunickname,
+        tu.email tuemail,tu.imgurl tuimgurl,tu.createDate tucreateDate,tu.updateDate tuupdateDate,
+        ty.id tyid,ty.name tyname
+        FROM  t_blog tb,t_user tu ,t_typo ty
+        <where>
+            tu.id = tb.userid AND ty.id= tb.typoid
+            <if test="typoid !=null">
+                and tb.typoid = #{typoid}
+            </if>
+        </where>
+         ORDER BY tb.updateDate DESC
+    </select>
+    <select id="queryBlogByTagesid" resultMap="queryBlogMap">
+        SELECT
+        tb.id tbid ,tb.title tbtitle ,tb.content tbcontent,tb.imgurl tbimgurl,tb.describes tbdescribes,
+        tb.flag tbflag,tb.count tbcount,tb.createDate tbcreateDate,tb.updateDate tbupdateDate,
+        tb.share tbshare,tb.pay tbpay,tb.comment tbcomment,tb.copyright tbcopyrigt,
+        tu.id tuid,tu.username tuusername,tu.password tupassword,tu.nickname tunickname,
+        tu.email tuemail,tu.imgurl tuimgurl,tu.createDate tucreateDate,tu.updateDate tuupdateDate,
+        ty.id tyid,ty.name tyname,
+        ta.id taid,ta.name taname
+        FROM  t_blog tb,t_blog_tages tba,t_tages ta,t_user tu,t_typo ty
+        <where>
+            tba.blogid = tb.id AND tba.tagesid = ta.id AND tu.id = tb.userid and ty.id= tb.typoid
+            <if test="tagesid != null">
+                AND tba.tagesid= #{tagesid}
+            </if>
+        </where>
+         ORDER BY tb.updateDate DESC
+    </select>
+
+    <!--后端search-->
+    <select id="searchBlogs" resultMap="blogSimpl" parameterType="blogSimpl">
+        select
+        tb.id tbid ,tb.title tbtitle ,tb.updateDate tbupdateDate,tb.share tbshare,
+        ty.id tyid,ty.name tyname
+        from  t_blog tb,t_typo ty
+        where tb.share = #{put}
+        <if test="title != '' ">
+            and tb.title lIKE CONCAT(CONCAT('%',#{title}),'%') and tb.typoid = ty.id
+        </if>
+        <if test="typoid != null">
+            and ty.id = #{typoid} and tb.typoid = ty.id
+        </if>
+        ORDER BY tb.updateDate DESC
+    </select>
+    <resultMap id="blogSimpl" type="blog">
+        <!--基础数据-->
+        <result property="id" column="tbid"/>
+        <result property="title" column="tbtitle"/>
+        <result property="updateDate" column="tbupdateDate"/>
+        <result property="share" column="tbshare"/>
+        <!--typo-->
+        <association property="typo" javaType="typo">
+            <result property="id" column="tyid"/>
+            <result property="name" column="tyname"/>
+        </association>
+    </resultMap>
+    <select id="queryBlogs" resultMap="blogSimpl">
+       SELECT
+        tb.id tbid ,tb.title tbtitle ,tb.updateDate tbupdateDate,tb.share tbshare,
+        ty.id tyid,ty.name tyname
+        FROM  t_blog tb,t_typo ty
+        WHERE  ty.id= tb.typoid ORDER BY tb.updateDate DESC
+    </select>
+
+    <select id="queryBlogByTitle" resultType="_int" parameterType="string">
+        select id from t_blog where title = #{title}
+    </select>
+
+    <update id="updateBlog" parameterType="blog">
+        update t_blog
+        set
+        title = #{title},content = #{content},imgurl = #{imgurl},
+        flag = #{flag},count = #{count},updateDate= #{updateDate},
+        share = #{share},pay=#{pay},comment=#{comment},copyright=#{copyright},
+        typoid = #{typo.id},describes=#{describes}
+        where id = #{id}
+    </update>
+
+    <select id="queryBlogShare" resultType="blog" >
+         SELECT tb.id ,tb.title  FROM t_blog tb
+         WHERE tb.share= #{share} ORDER BY tb.updateDate DESC
+    </select>
+
+
+    <select id="queryYears" resultType="int" >
+        SELECT DATE_FORMAT(tb.updateDate,'%Y') AS years FROM t_blog tb GROUP BY years ORDER BY years DESC
+    </select>
+
+
+    <select id="queryBlogByYear" resultType="blog">
+        SELECT tb.title,tb.flag,tb.updateDate,tb.id
+        FROM t_blog tb
+        WHERE DATE_FORMAT(tb.updateDate,'%Y') = #{year} ORDER BY tb.updateDate DESC
+    </select>
+
+
+    <select id="queryCount" resultType="_int">
+        SELECT COUNT(*) FROM t_blog ;
+    </select>
+
+
+    <select id="queryBlogFoot" resultType="blog">
+        SELECT tb.id,tb.title FROM t_blog tb ORDER BY tb.updateDate DESC LIMIT 0,3 ;
+    </select>
+
+    <update id="updateCount" >
+        UPDATE  t_blog tb SET tb.count = #{count} WHERE tb.id= #{id}
+    </update>
+    
+    
+</mapper>

@@ -1,0 +1,103 @@
+body{
+   background-image: url("https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") !important;
+}
+
+.footer-container{
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+.container-top{
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+.dispalyChanged{
+    display: inline-block;
+}
+.left-right{
+    padding-left: 1em !important;
+}
+.lable-tb{
+    padding-top: 2em !important;
+    padding-bottom:  2em!important;
+}
+.a-td{
+    margin-top: 1em !important;
+}
+.a-color{
+    color: #333 !important;
+}
+.right-top{
+    position: absolute !important;
+    top: 1.7em !important;
+    right: 0.2em !important;
+}
+.mobile-show{
+    display: none !important;
+}
+.container-blog-rf{
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+}
+.text-blog-rf{
+    padding-left: 3em !important;
+    padding-right: 3em !important;
+}
+.text-blog-tb{
+    padding-top: 2em !important;
+    padding-buttom: 2em !important;
+}
+.filed-blog-tb{
+    padding-top: 1em !important;
+    padding-buttom: 1em !important;
+}
+.label-type-margin-tb{
+    margin-top: 1em !important;
+    margin-buttom: 1em !important;
+    margin-right: 0.5em !important;
+    margin-left: 0.5em !important;
+}
+.row-tags-tb{
+    padding-top: 1em !important;
+}
+.about-tbrf{
+    margin-top: 0.5em !important;
+    margin-buttom: 0.5em !important;
+}
+.blogs-filed-rf{
+    padding-left: 2em !important;
+    padding-right: 2em !important;
+}
+.blogs-container-rf{
+    padding-left: 2em !important;
+    padding-right: 2em !important;
+}
+.blog-rb-fixed{
+    position: fixed !important;
+    z-index: 10 !important;
+}
+.blog-rb{
+    bottom: 0 !important;
+    right: 0 !important;
+}
+.blog-rb-padding{
+    padding: 1em !important;
+}
+@media screen and (max-width: 768px){
+    .mobile-hidder{
+        display: none !important;
+    }
+    .mobile-show{
+        display: block !important;
+    }
+    .container-blog-rf{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .text-blog-rf{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .a-td{
+        margin-top: 0.5em !important;
+    }
+}

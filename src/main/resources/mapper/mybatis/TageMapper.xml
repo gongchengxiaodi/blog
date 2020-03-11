@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huihui.mapper.TageMapper">
+
+    <select id="queryTagesById" resultType="tages" >
+        select * from t_tages where id = #{id}
+    </select>
+
+    <select id="queryTages" resultType="tages" >
+        select * from t_tages
+    </select>
+
+    <select id="queryTagesBlog" resultMap="queryTagesBlogMap">
+         SELECT ta.name taname ,ta.id taid ,tb.title tbtitle FROM t_tages ta ,t_blog tb ,t_blog_tages tba
+         WHERE ta.id=tba.tagesid AND tb.id=tba.blogid
+    </select>
+
+    <resultMap id="queryTagesBlogMap" type="tages">
+        <result property="id" column="taid"/>
+        <result property="name" column="taname"/>
+        <collection property="blogs" ofType="blog">
+            <result property="title" column="tbtitle"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insertTages" parameterType="tages">
+        insert into t_tages (name) values (#{name});
+    </insert>
+    <insert id="insertTagesList" parameterType="list">
+        insert into t_tages (name)
+        values
+        <foreach collection="list" index="index" separator="," item="item" >
+            (
+               #{item.name}
+            )
+        </foreach>;
+    </insert>
+
+
+
+    <update id="updateTages" parameterType="tages">
+        update t_tages set name = #{name}  where id = #{id} ;
+    </update>
+
+    <delete id="deleteTages" parameterType="tages">
+        delete from t_tages where id = #{id}
+    </delete>
+
+
+</mapper>

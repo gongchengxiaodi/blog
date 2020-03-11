@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huihui.mapper.TypoMapper">
+
+    <select id="queryTypoById" resultType="typo" >
+        select * from t_typo where id = #{id}
+    </select>
+
+
+    <select id="queryTypos" resultType="typo" >
+        SELECT *  FROM t_typo
+    </select>
+
+    <select id="queryTypoBlod" resultMap="queryTyposMap">
+        SELECT ty.id tid ,ty.name tname,tb.title tbtitle FROM t_typo ty ,t_blog tb WHERE tb.typoid=ty.id
+    </select>
+
+
+    <resultMap id="queryTyposMap" type="typo">
+        <result property="id" column="tid"/>
+        <result property="name" column="tname"/>
+        <collection property="blogs" ofType="blog">
+            <result property="title" column="tbtitle"/>
+        </collection>
+    </resultMap>
+
+
+
+    <insert id="insertTypo" parameterType="typo">
+        insert into t_typo (name) values (#{name});
+    </insert>
+
+    <update id="updateTypo" parameterType="typo">
+        update t_typo set name = #{name}  where id = #{id} ;
+    </update>
+
+    <delete id="deleteTypo" parameterType="typo">
+        delete from t_typo where id = #{id}
+    </delete>
+
+
+</mapper>

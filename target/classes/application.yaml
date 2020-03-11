@@ -1,0 +1,26 @@
+spring:
+  # thymeleaf
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+  # 时间配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  #邮件
+  mail:
+    username: 1640722136@qq.com
+    password: ltnfqyiulozmfdca
+    host: smtp.qq.com
+    properties:
+      mail:
+        smtp:
+          enable: true
+  profiles:
+    active: pro
+# mybatis的配置
+mybatis:
+  mapper-locations: classpath:mapper/mybatis/*.xml
+  type-aliases-package: com.huihui.domain
+
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--view中的导航-->
+<nav th:fragment="nav(n)" class="ui segment attached inverted ">
+    <div class="ui container">
+        <div class="ui inverted menu stackable secondary">
+            <h2 class="ui header item teal">Blog</h2>
+            <a th:href="@{/index}" class="ui mobile-play item mobile-hidder" th:classappend=" ${n==1} ? 'active'"><i class="home icon"></i>首页</a>
+            <a th:href="@{/typo(id=-1)}" class="ui mobile-play item mobile-hidder" th:classappend=" ${n==2} ? 'active'"><i class="idea icon"></i>分类</a>
+            <a th:href="@{/tages(id=-1)}" class="ui mobile-play item mobile-hidder" th:classappend=" ${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
+            <a th:href="@{/toArchives}" class="ui mobile-play item mobile-hidder" th:classappend=" ${n==4} ? 'active'"><i class="clone icon"></i>归档</a>
+            <a th:href="@{/about}" class="ui mobile-play item mobile-hidder" th:classappend=" ${n==5} ? 'active'"><i class="info icon"></i>关于我</a>
+            <div class="right item mobile-play mobile-hidder">
+                <form th:action="@{/toSearch}" method="post" name="topSearch" target="_blank">
+                    <div class="ui input icon">
+                        <input type="text" placeholder="Search...." name="search">
+                        <i onclick="document.forms['topSearch'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui mobile-click button icon right-top mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--view中的底部-->
+<footer th:fragment="foot" class="ui inverted segment attached ">
+    <div class="ui container center aligned footer-container">
+        <div class="ui grid  inverted  divided stackable ">
+            <div class="three wide column">
+                <div class="ui link inverted list">
+                    <div class="item">
+                        <img th:src="@{/img/weixin.png}" alt="" style="width: 100px" class="ui rounded image">
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column" id="footid"  >
+                <div class="ui link inverted list" th:fragment="test"  >
+                    <h4 class="ui header inverted" th:value="最新博客">最新博客</h4>
+                    <a th:href="@{/toblogById(id=${blog.getId()})}" class="item" th:text="${blog.getTitle()}" th:each="blog:${blogs}">SpringBoot讲解</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui header inverted">联系我</h4>
+                <div class="ui link inverted list">
+                    <a th:href="@{/toEmail}" class="item">E-mail: 1640722136@qq.com</a>
+                    <a href="#" class="item">QQ: 1640722136</a>
+                    <a href="#" class="item">Wechat: axuxianghui</a>
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui header inverted">个人信息</h4>
+                <p>这是我的个人博客，一个爱编程，爱读书，爱运动的小男孩</p>
+            </div>
+        </div>
+        <div class="ui inverted segment divider"></div>
+        <p>Copyright  2020.2.20 HUIHUI.AllRightsReserved</p>
+        <p><a href="http://beian.miit.gov.cn">鲁ICP备19039222号</a></p>
+    </div>
+</footer>
+
+<th:block th:fragment="js">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script th:src="@{/plug/prism/prism.js}"></script>
+    <script th:src="@{/plug/tocbot/tocbot.min.js}"></script>
+    <script th:src="@{/plug/md/editormd.min.js}"></script>
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <script>
+        $('#footid').load(/*[[ @{/toFoot} ]]*/ "/toFoot");
+    </script>
+</th:block>
+
+</html>
